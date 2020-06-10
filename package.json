@@ -1,0 +1,23 @@
+{
+  "name": "vidly",
+  "version": "1.0.0",
+  "description": "Movie renting service.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robinkataria/Vidly.git"
+  },
+  "author": "Robin Kataria",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robinkataria/Vidly/issues"
+  },
+  "homepage": "https://github.com/robinkataria/Vidly#readme",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "express": "^4.17.1"
+  }
+}
