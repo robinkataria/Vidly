@@ -1,5 +1,6 @@
 const express = require('express');
-const genres = require('./routes/genres')
+const genres = require('./routes/genres');
+const dbConnection = require('./src/dbconnection');
 
 const app = express();
 
