@@ -1,0 +1,30 @@
+const mongoose = require('mongoose');
+const Joi = require('@hapi/joi');
+
+const genreSchema = "./genre.model.js".genreSchema;
+
+const movieSchema = mongoose.Schema({
+    title: { type: String, minlength: 3, maxlength: 30, trim: true, require: true, },
+    genre: { type: genreSchema, require: true },
+    numberInStock: { type: Number, min: 0, max: 255, require: true },
+    dailyRentalRate: { type: Number, min: 0, max: 255, require: true },
+});
+
+const Movie = mongoose.model('Movie', movieSchema);
+
+validateMovie = (movie) => {
+    const schema = Joi.object({
+        title: Joi.string().min(3).max(30).required(),
+        genreId: Joi.string().required(),
+        numberInStock: Joi.number().required(),
+        dailyRentalRate: Joi.number().required(),
+    })
+    return schema.validate({
+        title: `${movie.title}`,
+        numberInStock: `${movie.numberInStock}`,
+        dailyRentalRate: `${movie.dailyRentalRate}`
+    });
+}
+
+module.exports.Movie = Movie;
+module.exports.validateMovie = validateMovie;
