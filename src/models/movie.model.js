@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Joi = require('@hapi/joi');
 
-const genreSchema = "./genre.model.js".genreSchema;
+const genreSchema = require('./genre.model.js').genreSchema;
 
 const movieSchema = mongoose.Schema({
     title: { type: String, minlength: 3, maxlength: 30, trim: true, require: true, },
@@ -21,6 +21,7 @@ validateMovie = (movie) => {
     })
     return schema.validate({
         title: `${movie.title}`,
+        genreId: `${movie.genreId}`,
         numberInStock: `${movie.numberInStock}`,
         dailyRentalRate: `${movie.dailyRentalRate}`
     });
