@@ -3,7 +3,7 @@ const Joi = require('@hapi/joi');
 
 const genreSchema = require('./genre.model.js').genreSchema;
 
-const movieSchema = mongoose.Schema({
+const movieSchema = new mongoose.Schema({
     title: { type: String, minlength: 3, maxlength: 30, trim: true, require: true, },
     genre: { type: genreSchema, require: true },
     numberInStock: { type: Number, min: 0, max: 255, require: true },
