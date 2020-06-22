@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { Customer, validateCustomer } = require('../src/models/customer.model');
+const { Customer, validateCustomer } = require('../models/customer.model');
 
 router.get("/", async (req, res) => {
     const customers = await Customer.find().sort('name');

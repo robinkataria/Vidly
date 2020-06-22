@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const bcrypt = require('bcrypt');
 
-const { User, validateUser } = require('../src/models/user.model');
+const { User, validateUser } = require('../models/user.model');
 
 router.post("/", async (req, res) => {
     const { error } = validateUser(req.body);
@@ -12,19 +11,25 @@ router.post("/", async (req, res) => {
     let user = await User.findOne({ email: req.body.email });
     if (user) return res.status(400).send('User already registered!');
 
+    const salt = await bcrypt.genSalt(10);
+    const hashed = await bcrypt.hash(req.body.password, salt);
+
     user = new User({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
+        password: hashed,
+        isAdmin: req.body.isAdmin
     });
     await user.save();
 
-    const token = jwt.sign({
+    const token = user.generateAuthToken();
+
+    res.header('x-auth-token', token).send({
         _id: user._id,
         name: user.name,
-        email: user.email
-    }, process.env.TOKEN_SECRET);
-    res.send(token);
+        email: user.email,
+        isAdmin: user.isAdmin
+    });
 });
 
 module.exports = router;
